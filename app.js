@@ -17,7 +17,8 @@ const fruitsSchema = new mongoose.Schema({
 
 const personSchema = new mongoose.Schema({
     name: String,
-    age: Number
+    age: Number,
+    favouriteFruit: fruitsSchema // embedding a fruit document inside the property favouriteFruit in Person document
 })
 
 const Fruit = mongoose.model("Fruit", fruitsSchema); // name of the collection should be in singular form
@@ -31,9 +32,26 @@ const fruit = new Fruit({
 
 const Person = mongoose.model("Person", personSchema);
 
+const pineapple = new Fruit({
+    name: "Pineapple",
+    score: 9,
+    review: "Great fruit"
+});
+
+// pineapple.save();
+
+const melon = new Fruit({
+    name: "Melon",
+    score: 8,
+    review: "I like Melons"
+});
+
+// melon.save();
+
 const person = new Person({
-    name: "John",
-    age: 37
+    name: "Amy",
+    age: 12,
+    favouriteFruit: pineapple
 })
 
 // person.save();
@@ -50,6 +68,14 @@ Fruit.find(function (err, fruits) {
         })
     }
 })
+
+Person.updateOne({ name: "John" }, { favouriteFruit: melon }, function (err) {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log("Succesfully updated!");
+    }
+});
 
 // Fruit.updateOne({ _id: "5ef475cefc4bef27985b95d9" }, { name: "Peach" }, function (err) {
 //     if (err) {
@@ -68,10 +94,14 @@ Fruit.find(function (err, fruits) {
 //     }
 // });
 
-Person.deleteMany({ name: "John" }, function (err) {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log("Successfully Deleted Many!")
-    }
-});
+// Person.deleteMany({ name: "John" }, function (err) {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log("Successfully Deleted Many!")
+//     }
+// });
+
+// Fruit.deleteMany({ name: "Melon" }, function (err) {
+
+// });
