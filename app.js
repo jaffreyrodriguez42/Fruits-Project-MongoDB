@@ -3,8 +3,15 @@ const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost:27017/fruitsDB", { useNewUrlParser: true });
 
 const fruitsSchema = new mongoose.Schema({
-    name: String,
-    rating: Number,
+    name: {
+        type: String,
+        required: [true, "Please check your data entry, no name specified!"]
+    },
+    rating: {
+        type: Number,
+        min: 1,
+        max: 10
+    },
     review: String
 })
 
@@ -16,12 +23,11 @@ const personSchema = new mongoose.Schema({
 const Fruit = mongoose.model("Fruit", fruitsSchema); // name of the collection should be in singular form
 
 const fruit = new Fruit({
-    name: "Apple",
-    rating: 7,
-    review: "Pretty solid as a fruit."
+    rating: 10,
+    review: "Sampalok is very maasim."
 })
 
-// fruit.save();
+fruit.save();
 
 const Person = mongoose.model("Person", personSchema);
 
@@ -30,33 +36,8 @@ const person = new Person({
     age: 37
 })
 
-person.save();
+// person.save();
 
-const kiwi = new Fruit({
-    name: "Kiwi",
-    score: 10,
-    review: "The best fruit"
-})
-
-const orange = new Fruit({
-    name: "Orange",
-    score: 4,
-    review: "Too sour for me"
-})
-
-const banana = new Fruit({
-    name: "Banana",
-    score: 3,
-    review: "Weird texture"
-})
-
-// Fruit.insertMany([kiwi, orange, banana], function (err) {
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         console.log("Successfully saved all the fruits to the fruitDB");
-//     }
-// });
 
 Fruit.find(function (err, fruits) {
     if (err) {
