@@ -27,7 +27,7 @@ const fruit = new Fruit({
     review: "Sampalok is very maasim."
 })
 
-fruit.save();
+// fruit.save();
 
 const Person = mongoose.model("Person", personSchema);
 
@@ -51,3 +51,27 @@ Fruit.find(function (err, fruits) {
     }
 })
 
+// Fruit.updateOne({ _id: "5ef475cefc4bef27985b95d9" }, { name: "Peach" }, function (err) {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log("Successfully updated the document");
+//     }
+// })
+
+
+// Fruit.deleteOne({ name: "Peach" }, function (err) {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log("Successfully Deleted!");
+//     }
+// });
+
+Person.deleteMany({ name: "John" }, function (err) {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log("Successfully Deleted Many!")
+    }
+});
